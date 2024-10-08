@@ -13,10 +13,6 @@ public class Ingredient {
         return this.name;
     }
 
-    public String getUnit() {
-        return this.unit;
-    }
-
     @Override
     public String toString() {
         return "\nIngredient: " + name + "\nKvantitet: " +  quantity + "\nEnhet: " + unit;
