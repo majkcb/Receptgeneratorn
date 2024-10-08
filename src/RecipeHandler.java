@@ -19,4 +19,9 @@ public class RecipeHandler {
     public List<Recipe> getAllRecipes() {
         return new ArrayList<>(recipes);
     }
+
+    @Override
+    public String toString() {
+        return recipes.toString();
+    }
 }

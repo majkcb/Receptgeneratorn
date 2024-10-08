@@ -18,5 +18,13 @@ public class RecipeTest {
         recipeHandler.addRecipe(pannkakor);
 
         assertEquals(1, recipeHandler.getAllRecipes().size());
+        System.out.println(recipeHandler.getAllRecipes());
+    }
+
+    @Test
+    void removeRecipe() {
+        recipeHandler.removeRecipe("Pannkakor");
+        assertEquals(0, recipeHandler.getAllRecipes().size());
+        System.out.println(recipeHandler.getAllRecipes());
     }
 }
