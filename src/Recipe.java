@@ -3,9 +3,9 @@ import java.util.List;
 public class Recipe {
     private final String name;
     private final String description;
-    private final String ingredient;
+    private final List<Ingredient> ingredient;
 
-    public Recipe(String name, String description, String ingredient) {
+    public Recipe(String name, String description, List<Ingredient> ingredient) {
         this.name = name;
         this.description = description;
         this.ingredient = ingredient;
@@ -19,13 +19,13 @@ public class Recipe {
         return description;
     }
 
-    public String getIngredients() {
+    public List<Ingredient> getIngredients() {
         return ingredient;
     }
 
     @Override
     public String toString() {
-        return "Recept: " + name + "\nBeskrivning: " + description + "\nIngredient: " + ingredient;
+        return "Recept: " + name + "\nBeskrivning: " + description + "\nIngredienser: " + ingredient;
     }
 
 }
