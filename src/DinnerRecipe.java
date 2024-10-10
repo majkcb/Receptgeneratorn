@@ -9,7 +9,7 @@ public class DinnerRecipe extends Recipe {
     }
 
     public int getCookingTime() {
-        return cookingTime;
+        return this.cookingTime;
     }
 
     public void setCookingTime(int cookingTime) {
@@ -18,6 +18,6 @@ public class DinnerRecipe extends Recipe {
 
     @Override
     public String toString() {
-        return super.toString() + "\nCooking Time: " + cookingTime;
+        return super.toString() + "\nCooking Time: " + cookingTime + " min";
     }
 }

@@ -1,24 +1,80 @@
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        RecipeHandler<Recipe> recipeHandler = new RecipeHandler<>();
 
-        Ingredient ingredient1 = new Ingredient("Mjöl", 3, "kg");
-        Ingredient ingredient2 = new Ingredient("Mjölk", 50, "L");
-        Ingredient ingredient3 = new Ingredient("Ägg", 6, "st");
+        System.out.println("Vilken typ av recept vill du skapa?");
+        System.out.println("1. Frukost");
+        System.out.println("2. Lunch");
+        System.out.println("3. Middag");
 
-        ArrayList<Ingredient> ingredients = new ArrayList<>();
-        ingredients.add(ingredient1);
-        ingredients.add(ingredient2);
-        ingredients.add(ingredient3);
+        int choice = scanner.nextInt();
+        scanner.nextLine();
 
-        RecipeHandler recipeHandler = new RecipeHandler();
-        Recipe pannkaka = new Recipe("Pannkaka", "Såhär gör du", ingredients);
-        recipeHandler.addRecipe(pannkaka);
+        System.out.println("Receptets namn: ");
+        String recipeName = scanner.nextLine();
+        System.out.println("Recept beskrivning: ");
+        String recipeDescription = scanner.nextLine();
 
-        System.out.println(recipeHandler.getAllRecipes());
+        List<Ingredient> ingredients = new ArrayList<>();
 
+        System.out.println("Lägg till ingredienser: ");
 
+        addIngredients(scanner, ingredients);
 
+        switch (choice) {
+                case 1 -> {
+                    System.out.print("Ange serveringstemperatur (Kall/Varm: ");
+                    String temperature = scanner.nextLine();
+                    ServingTemperature servingTemperature = ServingTemperature.valueOf(temperature.toUpperCase());
+                    BreakfastRecipe breakfastRecipe = new BreakfastRecipe(recipeName, recipeDescription, ingredients, servingTemperature);
+                    recipeHandler.addRecipe(breakfastRecipe);
+                }
+                case 2 -> {
+                    System.out.print("Ange antal portioner: ");
+                    int servings = scanner.nextInt();
+                    LunchRecipe lunchRecipe = new LunchRecipe(recipeName, recipeDescription, ingredients, servings);
+                    recipeHandler.addRecipe(lunchRecipe);
+                }
+                case 3 -> {
+                    System.out.print("Ange tillagningstid i minuter: ");
+                    int cookingTime = scanner.nextInt();
+                    DinnerRecipe dinnerRecipe = new DinnerRecipe(recipeName, recipeDescription, ingredients, cookingTime);
+                    recipeHandler.addRecipe(dinnerRecipe);
+                }
+                default -> System.out.println("Ogiltigt val.");
+            }
+
+        System.out.println("Dina recept: " + recipeHandler.getAllRecipes());
+
+    }
+
+    private static void addIngredients(Scanner scanner, List<Ingredient> ingredients) {
+        String ingredientName;
+        int quantity;
+        String unit;
+        String addMore;
+
+        do {
+            System.out.println("Ingrediens: ");
+            ingredientName = scanner.nextLine();
+
+            System.out.println("Mängd: ");
+            quantity = scanner.nextInt();
+            scanner.nextLine();
+
+            System.out.println("Enhet: ");
+            unit = scanner.nextLine();
+
+            ingredients.add(new Ingredient(ingredientName, quantity, unit));
+
+            System.out.println("Vill du lägga till en till ingrediens? (Ja/Nej)");
+            addMore = scanner.nextLine();
+
+        } while (addMore.equalsIgnoreCase("Ja"));
     }
 }

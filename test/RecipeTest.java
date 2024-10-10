@@ -7,11 +7,12 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class RecipeTest {
-    private RecipeHandler recipeHandler;
+    RecipeHandler<Recipe> recipeHandler;
+    ServingTemperature servingTemperature;
 
     @BeforeEach
     void setUp() {
-        recipeHandler = new RecipeHandler();
+        recipeHandler = new RecipeHandler<>();
     }
 
     @Test
@@ -27,6 +28,48 @@ public class RecipeTest {
         recipeHandler.addRecipe(pannkakor);
 
         assertEquals(1, recipeHandler.getAllRecipes().size());
+        System.out.println(recipeHandler.getAllRecipes());
+    }
+
+    @Test
+    public void testBreakfast() {
+        List<Ingredient> ingredients = new ArrayList<>();
+        ingredients.add(new Ingredient("Ägg", 5, "st"));
+
+        BreakfastRecipe breakfastRecipe = new BreakfastRecipe("Äggröra", "Såhär gör du", ingredients, ServingTemperature.VARM);
+        recipeHandler.addRecipe(breakfastRecipe);
+
+        assertEquals(ServingTemperature.VARM, ((BreakfastRecipe) recipeHandler.getAllRecipes().getFirst()).getServingTemperature());
+
+        System.out.println(recipeHandler.getAllRecipes());
+
+    }
+
+    @Test
+    public void testLunch() {
+        List<Ingredient> ingredients = new ArrayList<>();
+        ingredients.add(new Ingredient("Nötfärs", 5, "kg"));
+
+        LunchRecipe lunchRecipe = new LunchRecipe("Köttbullar", "Såhär gör du", ingredients, 2);
+        recipeHandler.addRecipe(lunchRecipe);
+
+        assertEquals(2, ((LunchRecipe) recipeHandler.getAllRecipes().getFirst()).getServings());
+
+        System.out.println(recipeHandler.getAllRecipes());
+
+    }
+
+    @Test
+    public void testDinner() {
+        List<Ingredient> ingredients = new ArrayList<>();
+        ingredients.add(new Ingredient("Kyckling", 200, "gram"));
+        ingredients.add(new Ingredient("ananas", 1, "kg"));
+
+        DinnerRecipe dinnerRecipe = new DinnerRecipe("Flygande jacob", "Såhär gör du", ingredients, 50);
+        recipeHandler.addRecipe(dinnerRecipe);
+
+        assertEquals(50, ((DinnerRecipe) recipeHandler.getAllRecipes().getFirst()).getCookingTime());
+
         System.out.println(recipeHandler.getAllRecipes());
     }
 

@@ -1,14 +1,14 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecipeHandler {
-    private final List<Recipe> recipes;
+public class RecipeHandler<T extends Recipe> {
+    private final List<T> recipes;
 
     public RecipeHandler() {
         this.recipes = new ArrayList<>();
     }
 
-    public void addRecipe(Recipe recipe) {
+    public void addRecipe(T recipe) {
         this.recipes.add(recipe);
     }
 
@@ -16,7 +16,7 @@ public class RecipeHandler {
         recipes.removeIf(recipe -> recipe.getName().equals(name));
     }
 
-    public List<Recipe> getAllRecipes() {
+    public List<T> getAllRecipes() {
         return new ArrayList<>(recipes);
     }
 

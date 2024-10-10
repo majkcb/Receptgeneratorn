@@ -18,5 +18,4 @@ public class Ingredient {
         return "\nIngredient: " + name + "\nKvantitet: " +  quantity + "\nEnhet: " + unit;
     }
 
-
 }
