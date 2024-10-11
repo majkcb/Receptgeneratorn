@@ -1,3 +1,5 @@
+package models;
+
 public class Ingredient {
     private final String name;
     private final int quantity;

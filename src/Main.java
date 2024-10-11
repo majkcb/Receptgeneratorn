@@ -1,3 +1,8 @@
+import models.*;
+import models.subclasses.BreakfastRecipe;
+import models.subclasses.DinnerRecipe;
+import models.subclasses.LunchRecipe;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -6,6 +11,12 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         RecipeHandler<Recipe> recipeHandler = new RecipeHandler<>();
+
+
+//        System.out.println("Välkommen till Receptgeneratorn!");
+//        System.out.println("1. Lägg till Recept");
+//        System.out.println("2. Visa alla Recept");
+//        System.out.println("3. Ändra Recept");
 
         System.out.println("Vilken typ av recept vill du skapa?");
         System.out.println("1. Frukost");
@@ -26,6 +37,13 @@ public class Main {
 
         addIngredients(scanner, ingredients);
 
+        addRecipe(choice, scanner, recipeName, recipeDescription, ingredients, recipeHandler);
+
+        System.out.println("Dina recept: " + recipeHandler.getAllRecipes());
+
+    }
+
+    private static void addRecipe(int choice, Scanner scanner, String recipeName, String recipeDescription, List<Ingredient> ingredients, RecipeHandler<Recipe> recipeHandler) {
         switch (choice) {
                 case 1 -> {
                     System.out.print("Ange serveringstemperatur (Kall/Varm: ");
@@ -48,9 +66,6 @@ public class Main {
                 }
                 default -> System.out.println("Ogiltigt val.");
             }
-
-        System.out.println("Dina recept: " + recipeHandler.getAllRecipes());
-
     }
 
     private static void addIngredients(Scanner scanner, List<Ingredient> ingredients) {

@@ -1,3 +1,8 @@
+package models.subclasses;
+
+import models.Ingredient;
+import models.Recipe;
+
 import java.util.List;
 
 public class LunchRecipe extends Recipe {

@@ -1,3 +1,9 @@
+package models.subclasses;
+
+import models.Ingredient;
+import models.Recipe;
+import models.ServingTemperature;
+
 import java.util.List;
 
 public class BreakfastRecipe extends Recipe {

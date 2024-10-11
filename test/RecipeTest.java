@@ -1,3 +1,7 @@
+import models.*;
+import models.subclasses.BreakfastRecipe;
+import models.subclasses.DinnerRecipe;
+import models.subclasses.LunchRecipe;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -8,7 +12,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class RecipeTest {
     RecipeHandler<Recipe> recipeHandler;
-    ServingTemperature servingTemperature;
 
     @BeforeEach
     void setUp() {
