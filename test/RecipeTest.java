@@ -46,10 +46,10 @@ public class RecipeTest {
         List<Ingredient> ingredients = new ArrayList<>();
         ingredients.add(new Ingredient("Ägg", 5, "st"));
 
-        BreakfastRecipe breakfastRecipe = new BreakfastRecipe("Äggröra", "Såhär gör du", ingredients, ServingTemperature.VARM);
+        BreakfastRecipe breakfastRecipe = new BreakfastRecipe("Äggröra", "Såhär gör du", ingredients, ServingTemperature.WARM);
         recipeHandler.addRecipe(breakfastRecipe);
 
-        assertEquals(ServingTemperature.VARM, ((BreakfastRecipe) recipeHandler.getAllRecipes().getFirst()).getServingTemperature());
+        assertEquals(ServingTemperature.WARM, ((BreakfastRecipe) recipeHandler.getAllRecipes().getFirst()).getServingTemperature());
     }
 
     @Test

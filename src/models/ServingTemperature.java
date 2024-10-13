@@ -1,7 +1,8 @@
 package models;
 
 public enum ServingTemperature {
-    KALL,
-    VARM
+    COLD,
+    WARM,
+    HOT
 }
 

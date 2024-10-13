@@ -9,6 +9,11 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+
+        // TODO Ändra all text till engelska
+        // TODO Ta bort beskrivning
+        // TODO Lägg till Interface "Instructions"
+
         Scanner scanner = new Scanner(System.in);
         RecipeHandler<Recipe> recipeHandler = new RecipeHandler<>();
 
@@ -125,14 +130,24 @@ public class Main {
 
         switch (choice) {
             case 1 -> {
-                System.out.print("Ange serveringstemperatur (Kall/Varm): ");
-                String temperatureInput = scanner.nextLine().trim().toUpperCase();
+                System.out.println("Välj serveringstemperatur:");
+                System.out.println("1. Kall");
+                System.out.println("2. Varm");
+                System.out.println("3. Het");
+
+                int temperatureChoice = scanner.nextInt();
+                scanner.nextLine();
+
                 ServingTemperature servingTemperature;
-                try {
-                    servingTemperature = ServingTemperature.valueOf(temperatureInput);
-                } catch (IllegalArgumentException e) {
-                    System.out.println("Ogiltig serveringstemperatur. Standardvärde 'VARM' används.");
-                    servingTemperature = ServingTemperature.VARM;
+
+                switch (temperatureChoice) {
+                    case 1 -> servingTemperature = ServingTemperature.COLD;
+                    case 2 -> servingTemperature = ServingTemperature.WARM;
+                    case 3 -> servingTemperature = ServingTemperature.HOT;
+                    default -> {
+                        System.out.println("Ogiltigt val. Standardvärde 'VARM' används.");
+                        servingTemperature = ServingTemperature.WARM;
+                    }
                 }
 
                 BreakfastRecipe breakfastRecipe = new BreakfastRecipe(recipeName, recipeDescription, ingredients, servingTemperature);
