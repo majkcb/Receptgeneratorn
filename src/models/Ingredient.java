@@ -15,6 +15,14 @@ public class Ingredient {
         return this.name;
     }
 
+    public int getQuantity() {
+        return this.quantity;
+    }
+
+    public String getUnit() {
+        return this.unit;
+    }
+
     @Override
     public String toString() {
         return "\nIngredient: " + name + "\nKvantitet: " +  quantity + "\nEnhet: " + unit;

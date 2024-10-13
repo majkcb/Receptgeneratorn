@@ -19,6 +19,14 @@ public class RecipeTest {
     }
 
     @Test
+    void testAddIngredient() {
+        Ingredient ingredient = new Ingredient("Ägg", 100, "st");
+        assertEquals("Ägg", ingredient.getName());
+        assertEquals(100, ingredient.getQuantity());
+        assertEquals("st", ingredient.getUnit());
+    }
+
+    @Test
     void testAddRecipe() {
 
         List<Ingredient> ingredients = new ArrayList<>();
@@ -31,7 +39,6 @@ public class RecipeTest {
         recipeHandler.addRecipe(pannkakor);
 
         assertEquals(1, recipeHandler.getAllRecipes().size());
-        System.out.println(recipeHandler.getAllRecipes());
     }
 
     @Test
@@ -43,9 +50,6 @@ public class RecipeTest {
         recipeHandler.addRecipe(breakfastRecipe);
 
         assertEquals(ServingTemperature.VARM, ((BreakfastRecipe) recipeHandler.getAllRecipes().getFirst()).getServingTemperature());
-
-        System.out.println(recipeHandler.getAllRecipes());
-
     }
 
     @Test
@@ -57,9 +61,6 @@ public class RecipeTest {
         recipeHandler.addRecipe(lunchRecipe);
 
         assertEquals(2, ((LunchRecipe) recipeHandler.getAllRecipes().getFirst()).getServings());
-
-        System.out.println(recipeHandler.getAllRecipes());
-
     }
 
     @Test
