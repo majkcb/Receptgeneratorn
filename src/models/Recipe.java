@@ -1,8 +1,10 @@
 package models;
 
+import java.lang.classfile.Instruction;
 import java.util.List;
 
-public class Recipe {
+public class Recipe implements Instruction {
+
     private final String name;
     private final String description;
     private final List<Ingredient> ingredient;
