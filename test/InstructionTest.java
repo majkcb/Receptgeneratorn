@@ -2,17 +2,16 @@ import models.Ingredient;
 import models.Recipe;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class InstructionTest {
 
+    // TODO Add Remove Step
+    // TODO Add Set Steps
+
     @Test
     void testAddAndGetInstructions() {
-
-        // TODO Add Method addStep and getSteps in Recipe
 
         List<Ingredient> ingredients = new ArrayList<>();
         ingredients.add(new Ingredient("Cucumber1", 40, "st"));
