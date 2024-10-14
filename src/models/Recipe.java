@@ -27,7 +27,7 @@ public class Recipe {
 
     @Override
     public String toString() {
-        return "Recept: " + name + "\nBeskrivning: " + description + "\nIngredienser: " + ingredient;
+        return "Recipe: " + name + "\nDescription: " + description + "\nIngredients: " + ingredient;
     }
 
 }

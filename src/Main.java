@@ -10,18 +10,16 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
-        // TODO Ändra all text till engelska
-        // TODO Ta bort beskrivning
-        // TODO Lägg till Interface "Instructions"
+        // TODO Add Interface "Instructions"
 
         Scanner scanner = new Scanner(System.in);
         RecipeHandler<Recipe> recipeHandler = new RecipeHandler<>();
 
         String[] menuChoices = {
-                "1. Lägg till recept",
-                "2. Ta bort recept",
-                "3. Visa alla recept",
-                "0. Avsluta programmet"
+                "1. Add recipe",
+                "2. Remove recipe",
+                "3. Print all recipes",
+                "0. Exit program"
         };
         menuHandler(menuChoices, scanner, recipeHandler);
     }
@@ -29,7 +27,7 @@ public class Main {
     private static void menuHandler(String[] menuChoices, Scanner scanner, RecipeHandler<Recipe> recipeHandler) {
 
         while (true) {
-            System.out.println("\nVälkommen till Receptgeneratorn! Vad vill du göra?");
+            System.out.println("\nWelcome to the recipe generator!");
             for (String menuChoice : menuChoices) {
                 System.out.println(menuChoice);
             }
@@ -38,7 +36,7 @@ public class Main {
             try {
                 menuChoice = scanner.nextInt();
             } catch (Exception e) {
-                System.out.println("Felaktig inmatning. Ange ett nummer från menyn.");
+                System.out.println("Invalid input. Please enter a number from the menu.");
                 scanner.nextLine();
                 continue;
             }
@@ -55,42 +53,42 @@ public class Main {
                     printAllRecipes(recipeHandler);
                     break;
                 case 0:
-                    System.out.println("Avslutar programmet...");
+                    System.out.println("Exiting program...");
                     scanner.close();
                     return;
                 default:
-                    System.out.println("Ogiltigt val, försök igen...");
+                    System.out.println("Invalid choice, please try again");
             }
         }
     }
 
     private static void addNewRecipe(Scanner scanner, RecipeHandler<Recipe> recipeHandler) {
 
-        System.out.println("\nVilken typ av recept vill du skapa?");
-        System.out.println("1. Frukost");
+        System.out.println("\nVWhat kind of recipe do you wish to create?");
+        System.out.println("1. Breakfast");
         System.out.println("2. Lunch");
-        System.out.println("3. Middag");
-        System.out.print("Ange ditt val: ");
+        System.out.println("3. Dinner");
+        System.out.print("Enter your choice: ");
 
         int subChoice;
         try {
             subChoice = scanner.nextInt();
         } catch (Exception e) {
-            System.out.println("Felaktig inmatning. Återgår till huvudmenyn.");
+            System.out.println("Invalid input. Returning to the main menu.");
             scanner.nextLine();
             return;
         }
         scanner.nextLine();
 
         if (subChoice < 1 || subChoice > 3) {
-            System.out.println("Ogiltigt val. Återgår till huvudmenyn.");
+            System.out.println("Invalid input. Returning to the main menu.");
             return;
         }
 
-        System.out.print("Receptets namn: ");
+        System.out.print("Recipe name: ");
         String recipeName = scanner.nextLine();
 
-        System.out.print("Recept beskrivning: ");
+        System.out.print("Recipe description: ");
         String recipeDescription = scanner.nextLine();
 
         List<Ingredient> ingredients = new ArrayList<>();
@@ -101,7 +99,7 @@ public class Main {
 
     private static void removeRecipe(Scanner scanner, RecipeHandler<Recipe> recipeHandler) {
 
-        System.out.print("\nAnge namnet på receptet som ska tas bort: ");
+        System.out.print("\nEnter the name of the recipe to be removed: ");
         String recipeToRemove = scanner.nextLine();
 
         List<Recipe> allRecipes = recipeHandler.getAllRecipes();
@@ -109,18 +107,18 @@ public class Main {
 
         if (recipeExists) {
             recipeHandler.removeRecipe(recipeToRemove);
-            System.out.println("Receptet \"" + recipeToRemove + "\" har tagits bort.");
+            System.out.println("The recipe \"" + recipeToRemove + "\" has been removed.");
         } else {
-            System.out.println("Receptet \"" + recipeToRemove + "\" hittades inte.");
+            System.out.println("The recipe \"" + recipeToRemove + "\" was not found");
         }
     }
 
     private static void printAllRecipes(RecipeHandler<Recipe> recipeHandler) {
 
-        System.out.println("\nDina recept:");
+        System.out.println("\nYour recipes:");
         List<Recipe> allRecipes = recipeHandler.getAllRecipes();
         if (allRecipes.isEmpty()) {
-            System.out.println("Inga recept att visa.");
+            System.out.println("No recipes to display.");
         } else {
             allRecipes.forEach(System.out::println);
         }
@@ -130,10 +128,10 @@ public class Main {
 
         switch (choice) {
             case 1 -> {
-                System.out.println("Välj serveringstemperatur:");
-                System.out.println("1. Kall");
-                System.out.println("2. Varm");
-                System.out.println("3. Het");
+                System.out.println("Choose serving temperature:");
+                System.out.println("1. Cold");
+                System.out.println("2. Warm");
+                System.out.println("3. Hot");
 
                 int temperatureChoice = scanner.nextInt();
                 scanner.nextLine();
@@ -145,22 +143,22 @@ public class Main {
                     case 2 -> servingTemperature = ServingTemperature.WARM;
                     case 3 -> servingTemperature = ServingTemperature.HOT;
                     default -> {
-                        System.out.println("Ogiltigt val. Standardvärde 'VARM' används.");
+                        System.out.println("Invalid choice. Default value 'WARM' will be used.");
                         servingTemperature = ServingTemperature.WARM;
                     }
                 }
 
                 BreakfastRecipe breakfastRecipe = new BreakfastRecipe(recipeName, recipeDescription, ingredients, servingTemperature);
                 recipeHandler.addRecipe(breakfastRecipe);
-                System.out.println("Frukostrecept \"" + recipeName + "\" har lagts till.");
+                System.out.println("Breakfast recipe \"" + recipeName + "\" has been added.");
             }
             case 2 -> {
-                System.out.print("Ange antal portioner: ");
+                System.out.print("Enter the number of servings: ");
                 int servings;
                 try {
                     servings = scanner.nextInt();
                 } catch (Exception e) {
-                    System.out.println("Felaktig inmatning. Antal portioner satt till 1.");
+                    System.out.println("Invalid input. Number of servings set to 1.");
                     servings = 1;
                     scanner.nextLine();
                 }
@@ -168,15 +166,15 @@ public class Main {
 
                 LunchRecipe lunchRecipe = new LunchRecipe(recipeName, recipeDescription, ingredients, servings);
                 recipeHandler.addRecipe(lunchRecipe);
-                System.out.println("Lunchrecept \"" + recipeName + "\" har lagts till.");
+                System.out.println("Lunch recipe \"" + recipeName + "\" has been added");
             }
             case 3 -> {
-                System.out.print("Ange tillagningstid i minuter: ");
+                System.out.print("Enter cooking time in minutes: ");
                 int cookingTime;
                 try {
                     cookingTime = scanner.nextInt();
                 } catch (Exception e) {
-                    System.out.println("Felaktig inmatning. Tillagningstid satt till 30 minuter.");
+                    System.out.println("Invalid input. Cooking time set to 30 minutes.");
                     cookingTime = 30;
                     scanner.nextLine();
                 }
@@ -184,9 +182,9 @@ public class Main {
 
                 DinnerRecipe dinnerRecipe = new DinnerRecipe(recipeName, recipeDescription, ingredients, cookingTime);
                 recipeHandler.addRecipe(dinnerRecipe);
-                System.out.println("Middagsrecept \"" + recipeName + "\" har lagts till.");
+                System.out.println("Dinner recipe \"" + recipeName + "\" has been added.");
             }
-            default -> System.out.println("Ogiltigt val.");
+            default -> System.out.println("Invalid choice");
         }
     }
 
@@ -198,33 +196,33 @@ public class Main {
         String addMore;
 
         while (true) {
-            System.out.print("Ingrediens namn: ");
+            System.out.print("Ingredient name: ");
             ingredientName = scanner.nextLine().trim();
 
-            System.out.print("Mängd: ");
+            System.out.print("Quantity: ");
             while (!scanner.hasNextInt()) {
-                System.out.println("Felaktig inmatning. Ange ett heltal för mängden.");
+                System.out.println("Invalid input. Please enter an integer for the quantity.");
                 scanner.next();
-                System.out.print("Mängd: ");
+                System.out.print("Quantity: ");
             }
             quantity = scanner.nextInt();
             scanner.nextLine();
 
-            System.out.print("Enhet (t ex: g, st, kg, dl): ");
+            System.out.print("Unit (e.g., g, pcs, kg, dl): ");
             unit = scanner.nextLine().trim();
 
             ingredients.add(new Ingredient(ingredientName, quantity, unit));
 
             while (true) {
-                System.out.print("Vill du lägga till en till ingrediens? (Ja/Nej): ");
+                System.out.print("Would you like to add another ingredient? (Yes/No): ");
                 addMore = scanner.nextLine().trim();
 
-                if (addMore.equalsIgnoreCase("Ja")) {
+                if (addMore.equalsIgnoreCase("Yes")) {
                     break;
-                } else if (addMore.equalsIgnoreCase("Nej")) {
+                } else if (addMore.equalsIgnoreCase("No")) {
                     return;
                 } else {
-                    System.out.println("Felaktig inmatning, skriv 'Ja' eller 'Nej'.");
+                    System.out.println("Invalid input, please type 'Yes' or 'No'.");
                 }
             }
         }

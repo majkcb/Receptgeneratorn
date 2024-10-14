@@ -24,6 +24,6 @@ public class BreakfastRecipe extends Recipe {
 
     @Override
     public String toString() {
-        return super.toString() + "\nServeringstemperatur: " + servingTemperature;
+        return super.toString() + "\nServing temperature " + servingTemperature;
     }
 }
