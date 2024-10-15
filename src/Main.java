@@ -10,7 +10,8 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
-        // TODO Add Interface "Instructions"
+        // TODO Break down the addNewRecipe function into multiple functions
+        // TODO Include "Instructions" to the Recipe Array to display when printing
 
         Scanner scanner = new Scanner(System.in);
         RecipeHandler<Recipe> recipeHandler = new RecipeHandler<>();
@@ -91,42 +92,14 @@ public class Main {
         System.out.print("Recipe description: ");
         String recipeDescription = scanner.nextLine();
 
+        System.out.println("Adding instructions for the recipe:");
+        List<String> steps = addInstructions(scanner);
+
         List<Ingredient> ingredients = new ArrayList<>();
         addIngredients(scanner, ingredients);
 
-        addRecipe(subChoice, scanner, recipeName, recipeDescription, ingredients, recipeHandler);
-    }
+        switch (subChoice) {
 
-    private static void removeRecipe(Scanner scanner, RecipeHandler<Recipe> recipeHandler) {
-
-        System.out.print("\nEnter the name of the recipe to be removed: ");
-        String recipeToRemove = scanner.nextLine();
-
-        List<Recipe> allRecipes = recipeHandler.getAllRecipes();
-        boolean recipeExists = allRecipes.stream().anyMatch(r -> r.getName().equalsIgnoreCase(recipeToRemove));
-
-        if (recipeExists) {
-            recipeHandler.removeRecipe(recipeToRemove);
-            System.out.println("The recipe \"" + recipeToRemove + "\" has been removed.");
-        } else {
-            System.out.println("The recipe \"" + recipeToRemove + "\" was not found");
-        }
-    }
-
-    private static void printAllRecipes(RecipeHandler<Recipe> recipeHandler) {
-
-        System.out.println("\nYour recipes:");
-        List<Recipe> allRecipes = recipeHandler.getAllRecipes();
-        if (allRecipes.isEmpty()) {
-            System.out.println("No recipes to display.");
-        } else {
-            allRecipes.forEach(System.out::println);
-        }
-    }
-
-    private static void addRecipe(int choice, Scanner scanner, String recipeName, String recipeDescription, List<Ingredient> ingredients, RecipeHandler<Recipe> recipeHandler) {
-
-        switch (choice) {
             case 1 -> {
                 System.out.println("Choose serving temperature:");
                 System.out.println("1. Cold");
@@ -149,6 +122,7 @@ public class Main {
                 }
 
                 BreakfastRecipe breakfastRecipe = new BreakfastRecipe(recipeName, recipeDescription, ingredients, servingTemperature);
+                breakfastRecipe.setSteps(steps);
                 recipeHandler.addRecipe(breakfastRecipe);
                 System.out.println("Breakfast recipe \"" + recipeName + "\" has been added.");
             }
@@ -165,6 +139,7 @@ public class Main {
                 scanner.nextLine();
 
                 LunchRecipe lunchRecipe = new LunchRecipe(recipeName, recipeDescription, ingredients, servings);
+                lunchRecipe.setSteps(steps);
                 recipeHandler.addRecipe(lunchRecipe);
                 System.out.println("Lunch recipe \"" + recipeName + "\" has been added");
             }
@@ -181,6 +156,7 @@ public class Main {
                 scanner.nextLine();
 
                 DinnerRecipe dinnerRecipe = new DinnerRecipe(recipeName, recipeDescription, ingredients, cookingTime);
+                dinnerRecipe.setSteps(steps);
                 recipeHandler.addRecipe(dinnerRecipe);
                 System.out.println("Dinner recipe \"" + recipeName + "\" has been added.");
             }
@@ -226,6 +202,63 @@ public class Main {
                 }
             }
         }
-
     }
+
+    private static void removeRecipe(Scanner scanner, RecipeHandler<Recipe> recipeHandler) {
+
+        System.out.print("\nEnter the name of the recipe to be removed: ");
+        String recipeToRemove = scanner.nextLine();
+
+        List<Recipe> allRecipes = recipeHandler.getAllRecipes();
+        boolean recipeExists = allRecipes.stream().anyMatch(r -> r.getName().equalsIgnoreCase(recipeToRemove));
+
+        if (recipeExists) {
+            recipeHandler.removeRecipe(recipeToRemove);
+            System.out.println("The recipe \"" + recipeToRemove + "\" has been removed.");
+        } else {
+            System.out.println("The recipe \"" + recipeToRemove + "\" was not found");
+        }
+    }
+
+    private static void printAllRecipes(RecipeHandler<Recipe> recipeHandler) {
+
+        System.out.println("\nYour recipes:");
+        List<Recipe> allRecipes = recipeHandler.getAllRecipes();
+        if (allRecipes.isEmpty()) {
+            System.out.println("No recipes to display.");
+        } else {
+            allRecipes.forEach(System.out::println);
+        }
+    }
+
+    private static List<String> addInstructions(Scanner scanner) {
+        List<String> steps = new ArrayList<>();
+        String step;
+        String addMore;
+
+        while (true) {
+            System.out.print("Enter instruction step: ");
+            step = scanner.nextLine().trim();
+            if (!step.isEmpty()) {
+                steps.add(step);
+            } else {
+                System.out.println("Step cannot be empty.");
+                continue;
+            }
+
+            while (true) {
+                System.out.print("Would you like to add another step? (Yes/No): ");
+                addMore = scanner.nextLine().trim();
+
+                if (addMore.equalsIgnoreCase("Yes")) {
+                    break;
+                } else if (addMore.equalsIgnoreCase("No")) {
+                    return steps;
+                } else {
+                    System.out.println("Invalid input, please type 'Yes' or 'No'.");
+                }
+            }
+        }
+    }
+
 }
