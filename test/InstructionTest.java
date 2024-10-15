@@ -7,9 +7,6 @@ import java.util.List;
 
 public class InstructionTest {
 
-    // TODO Add removeStep and setSteps to Instruction interface
-    // TODO Implement methods to the Recipe class
-
     @Test
     void testRemoveStep() {
         Recipe recipe = new Recipe("A cucumber recipe", "A wonderful dish", new ArrayList<>());

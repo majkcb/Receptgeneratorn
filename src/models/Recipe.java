@@ -39,6 +39,20 @@ public class Recipe implements Instruction {
         return instructions;
     }
 
+    @Override
+    public void removeStep(String step) {
+        instructions.remove(step);
+    }
+
+    @Override
+    public void setSteps(List<String> steps) {
+        if (steps == null) {
+            throw new IllegalArgumentException("Steps cannot be null.");
+        }
+        this.instructions = new ArrayList<>(steps);
+    }
+
+
 
     @Override
     public String toString() {
