@@ -7,8 +7,35 @@ import java.util.List;
 
 public class InstructionTest {
 
-    // TODO Add Remove Step
-    // TODO Add Set Steps
+    // TODO Add removeStep and setSteps to Instruction interface
+    // TODO Implement methods to the Recipe class
+
+    @Test
+    void testRemoveStep() {
+        Recipe recipe = new Recipe("A cucumber recipe", "A wonderful dish", new ArrayList<>());
+
+        recipe.addStep("Step 1: Add cucumber");
+        recipe.addStep("Step 2: Mix cucumber");
+
+        recipe.removeStep("Step 1: Add cucumber");
+
+        List<String> steps = recipe.getSteps();
+        assertEquals(1, steps.size());
+        assertEquals("Step 2: Mix cucumber", steps.getFirst());
+    }
+
+    @Test
+    void testSetSteps() {
+        Recipe recipe = new Recipe("A cucumber recipe", "A wonderful dish", new ArrayList<>());
+
+        List<String> newSteps = List.of("Step 1: Chop cucumber", "Step 2: Mix cucumber");
+        recipe.setSteps(newSteps);
+
+        List<String> steps = recipe.getSteps();
+        assertEquals(2, steps.size());
+        assertEquals("Step 1: Chop cucumber", steps.get(0));
+        assertEquals("Step 2: Mix cucumber", steps.get(1));
+    }
 
     @Test
     void testAddAndGetInstructions() {
