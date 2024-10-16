@@ -10,8 +10,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
-        // TODO Break down the addNewRecipe function into multiple functions
-        // TODO Include "Instructions" to the Recipe Array to display when printing
+        // TODO Refactor methods and packages
 
         Scanner scanner = new Scanner(System.in);
         RecipeHandler<Recipe> recipeHandler = new RecipeHandler<>();
@@ -65,7 +64,47 @@ public class Main {
 
     private static void addNewRecipe(Scanner scanner, RecipeHandler<Recipe> recipeHandler) {
 
-        System.out.println("\nVWhat kind of recipe do you wish to create?");
+        int subChoice = inputRecipeType(scanner);
+
+        if (subChoice < 1 || subChoice > 3) {
+            System.out.println("Invalid input. Returning to the main menu.");
+            return;
+        }
+
+        String recipeName = inputRecipeName(scanner);
+        String recipeDescription = inputRecipeDescription(scanner);
+        List<String> steps = addInstructions(scanner);
+        List<Ingredient> ingredients = new ArrayList<>();
+        addIngredients(scanner, ingredients);
+
+        switch (subChoice) {
+            case 1 -> {
+                ServingTemperature servingTemperature = inputServingTemperature(scanner);
+                BreakfastRecipe breakfastRecipe = new BreakfastRecipe(recipeName, recipeDescription, ingredients, servingTemperature);
+                breakfastRecipe.setSteps(steps);
+                recipeHandler.addRecipe(breakfastRecipe);
+                System.out.println("Breakfast recipe \"" + recipeName + "\" has been added.");
+            }
+            case 2 -> {
+                int servings = inputServings(scanner);
+                LunchRecipe lunchRecipe = new LunchRecipe(recipeName, recipeDescription, ingredients, servings);
+                lunchRecipe.setSteps(steps);
+                recipeHandler.addRecipe(lunchRecipe);
+                System.out.println("Lunch recipe \"" + recipeName + "\" has been added");
+            }
+            case 3 -> {
+                int cookingTime = inputCookingTime(scanner);
+                DinnerRecipe dinnerRecipe = new DinnerRecipe(recipeName, recipeDescription, ingredients, cookingTime);
+                dinnerRecipe.setSteps(steps);
+                recipeHandler.addRecipe(dinnerRecipe);
+                System.out.println("Dinner recipe \"" + recipeName + "\" has been added.");
+            }
+            default -> System.out.println("Invalid choice");
+        }
+    }
+
+    private static int inputRecipeType(Scanner scanner) {
+        System.out.println("\nWhat kind of recipe do you wish to create?");
         System.out.println("1. Breakfast");
         System.out.println("2. Lunch");
         System.out.println("3. Dinner");
@@ -77,91 +116,69 @@ public class Main {
         } catch (Exception e) {
             System.out.println("Invalid input. Returning to the main menu.");
             scanner.nextLine();
-            return;
+            return -1;
         }
         scanner.nextLine();
 
-        if (subChoice < 1 || subChoice > 3) {
-            System.out.println("Invalid input. Returning to the main menu.");
-            return;
-        }
+        return subChoice;
+    }
 
+    private static String inputRecipeName(Scanner scanner) {
         System.out.print("Recipe name: ");
-        String recipeName = scanner.nextLine();
+        return scanner.nextLine();
+    }
 
+    private static String inputRecipeDescription(Scanner scanner) {
         System.out.print("Recipe description: ");
-        String recipeDescription = scanner.nextLine();
+        return scanner.nextLine();
+    }
 
-        System.out.println("Adding instructions for the recipe:");
-        List<String> steps = addInstructions(scanner);
+    private static ServingTemperature inputServingTemperature(Scanner scanner) {
+        System.out.println("\nChoose serving temperature:");
+        System.out.println("1. Cold");
+        System.out.println("2. Warm");
+        System.out.println("3. Hot");
 
-        List<Ingredient> ingredients = new ArrayList<>();
-        addIngredients(scanner, ingredients);
+        int temperatureChoice = scanner.nextInt();
+        scanner.nextLine();
 
-        switch (subChoice) {
-
-            case 1 -> {
-                System.out.println("Choose serving temperature:");
-                System.out.println("1. Cold");
-                System.out.println("2. Warm");
-                System.out.println("3. Hot");
-
-                int temperatureChoice = scanner.nextInt();
-                scanner.nextLine();
-
-                ServingTemperature servingTemperature;
-
-                switch (temperatureChoice) {
-                    case 1 -> servingTemperature = ServingTemperature.COLD;
-                    case 2 -> servingTemperature = ServingTemperature.WARM;
-                    case 3 -> servingTemperature = ServingTemperature.HOT;
-                    default -> {
-                        System.out.println("Invalid choice. Default value 'WARM' will be used.");
-                        servingTemperature = ServingTemperature.WARM;
-                    }
-                }
-
-                BreakfastRecipe breakfastRecipe = new BreakfastRecipe(recipeName, recipeDescription, ingredients, servingTemperature);
-                breakfastRecipe.setSteps(steps);
-                recipeHandler.addRecipe(breakfastRecipe);
-                System.out.println("Breakfast recipe \"" + recipeName + "\" has been added.");
+        return switch (temperatureChoice) {
+            case 1 -> ServingTemperature.COLD;
+            case 2 -> ServingTemperature.WARM;
+            case 3 -> ServingTemperature.HOT;
+            default -> {
+                System.out.println("Invalid choice. Default value 'WARM' will be used.");
+                yield ServingTemperature.WARM;
             }
-            case 2 -> {
-                System.out.print("Enter the number of servings: ");
-                int servings;
-                try {
-                    servings = scanner.nextInt();
-                } catch (Exception e) {
-                    System.out.println("Invalid input. Number of servings set to 1.");
-                    servings = 1;
-                    scanner.nextLine();
-                }
-                scanner.nextLine();
+        };
+    }
 
-                LunchRecipe lunchRecipe = new LunchRecipe(recipeName, recipeDescription, ingredients, servings);
-                lunchRecipe.setSteps(steps);
-                recipeHandler.addRecipe(lunchRecipe);
-                System.out.println("Lunch recipe \"" + recipeName + "\" has been added");
-            }
-            case 3 -> {
-                System.out.print("Enter cooking time in minutes: ");
-                int cookingTime;
-                try {
-                    cookingTime = scanner.nextInt();
-                } catch (Exception e) {
-                    System.out.println("Invalid input. Cooking time set to 30 minutes.");
-                    cookingTime = 30;
-                    scanner.nextLine();
-                }
-                scanner.nextLine();
-
-                DinnerRecipe dinnerRecipe = new DinnerRecipe(recipeName, recipeDescription, ingredients, cookingTime);
-                dinnerRecipe.setSteps(steps);
-                recipeHandler.addRecipe(dinnerRecipe);
-                System.out.println("Dinner recipe \"" + recipeName + "\" has been added.");
-            }
-            default -> System.out.println("Invalid choice");
+    private static int inputServings(Scanner scanner) {
+        System.out.print("\nEnter the number of servings: ");
+        int servings;
+        try {
+            servings = scanner.nextInt();
+        } catch (Exception e) {
+            System.out.println("Invalid input. Number of servings set to 1.");
+            servings = 1;
+            scanner.nextLine();
         }
+        scanner.nextLine();
+        return servings;
+    }
+
+    private static int inputCookingTime(Scanner scanner) {
+        System.out.print("\nEnter cooking time in minutes: ");
+        int cookingTime;
+        try {
+            cookingTime = scanner.nextInt();
+        } catch (Exception e) {
+            System.out.println("Invalid input. Cooking time set to 30 minutes.");
+            cookingTime = 30;
+            scanner.nextLine();
+        }
+        scanner.nextLine();
+        return cookingTime;
     }
 
     private static void addIngredients(Scanner scanner, List<Ingredient> ingredients) {
@@ -227,7 +244,17 @@ public class Main {
         if (allRecipes.isEmpty()) {
             System.out.println("No recipes to display.");
         } else {
-            allRecipes.forEach(System.out::println);
+            for (Recipe recipe : allRecipes) {
+                System.out.println(recipe);
+                List<String> steps = recipe.getSteps();
+                if (steps != null && !steps.isEmpty()) {
+                    System.out.println("Instructions:");
+                    for (int i = 0; i < steps.size(); i++) {
+                        System.out.println((i + 1) + ". " + steps.get(i));
+                    }
+                }
+                System.out.println("---------------------------");
+            }
         }
     }
 

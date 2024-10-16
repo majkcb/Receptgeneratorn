@@ -52,8 +52,6 @@ public class Recipe implements Instruction {
         this.instructions = new ArrayList<>(steps);
     }
 
-
-
     @Override
     public String toString() {
         return "Recipe: " + name + "\nDescription: " + description + "\nIngredients: " + ingredient;
