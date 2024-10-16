@@ -1,7 +1,4 @@
-package models.subclasses;
-
-import models.Ingredient;
-import models.Recipe;
+package models;
 
 import java.util.List;
 

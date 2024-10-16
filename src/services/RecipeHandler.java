@@ -1,4 +1,6 @@
-package models;
+package services;
+
+import models.Recipe;
 
 import java.util.ArrayList;
 import java.util.List;

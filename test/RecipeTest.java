@@ -1,9 +1,10 @@
 import models.*;
-import models.subclasses.BreakfastRecipe;
-import models.subclasses.DinnerRecipe;
-import models.subclasses.LunchRecipe;
+import models.BreakfastRecipe;
+import models.DinnerRecipe;
+import models.LunchRecipe;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import services.RecipeHandler;
 
 import java.util.ArrayList;
 import java.util.List;
