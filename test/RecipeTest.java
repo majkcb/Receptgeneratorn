@@ -1,7 +1,7 @@
 import models.*;
-import models.BreakfastRecipe;
-import models.DinnerRecipe;
-import models.LunchRecipe;
+import models.categories.BreakfastRecipe;
+import models.categories.DinnerRecipe;
+import models.categories.LunchRecipe;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import services.RecipeHandler;

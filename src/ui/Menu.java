@@ -1,6 +1,9 @@
 package ui;
 
 import models.*;
+import models.categories.BreakfastRecipe;
+import models.categories.DinnerRecipe;
+import models.categories.LunchRecipe;
 import services.RecipeHandler;
 
 import java.util.ArrayList;

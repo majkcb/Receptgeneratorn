@@ -1,4 +1,8 @@
-package models;
+package models.categories;
+
+import models.Ingredient;
+import models.Recipe;
+import models.ServingTemperature;
 
 import java.util.List;
 
